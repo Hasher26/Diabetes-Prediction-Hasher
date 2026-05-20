@@ -25,5 +25,8 @@ ucimlrepo>=0.0.7
 # Interpretierbarkeit
 shap>=0.46
 
+# Statistik
+statsmodels>=0.14
+
 # Optional (für Section 10 Erweiterungen)
 umap-learn>=0.5         # Class-Overlap-Visualisierung
