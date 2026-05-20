@@ -1,0 +1,29 @@
+# Core
+numpy>=1.26
+pandas>=2.2
+scipy>=1.12
+
+# ML
+scikit-learn>=1.5
+imbalanced-learn>=0.13
+xgboost>=2.1
+lightgbm>=4.5
+
+# Visualisierung
+matplotlib>=3.9
+seaborn>=0.13
+
+# Notebooks
+jupyter>=1.1
+jupyterlab>=4.3
+ipykernel>=6.29
+ipywidgets>=8.1
+
+# Datensatz-Zugriff
+ucimlrepo>=0.0.7
+
+# Interpretierbarkeit
+shap>=0.46
+
+# Optional (für Section 10 Erweiterungen)
+umap-learn>=0.5         # Class-Overlap-Visualisierung
