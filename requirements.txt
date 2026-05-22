@@ -22,6 +22,9 @@ ipywidgets>=8.1
 # Datensatz-Zugriff
 ucimlrepo>=0.0.7
 
+# Datei-I/O
+pyarrow>=14.0
+
 # Interpretierbarkeit
 shap>=0.46
 
