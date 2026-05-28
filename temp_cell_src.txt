@@ -1,0 +1,30 @@
+Der Plot zeigt die Diabetes-Prävalenz getrennt nach Feature-Ausprägung (0 vs. 1),
+sortiert nach dem absoluten Prävalenzunterschied Δ.
+
+**Stärkste positive Prädiktoren (Δ > 10 %):**
+HeartDiseaseorAttack (+21 %), DiffWalk (+20,2 %), Stroke (+18,6 %) und HighBP
+(+18,4 %) zeigen die größten Unterschiede. Das ist inhaltlich plausibel — diese
+Variablen bilden einen klassischen Komorbiditäts-Cluster: kardiovaskuläre
+Erkrankungen, Bluthochdruck und eingeschränkte Mobilität sind bekannte Begleit-
+und Folgeerkrankungen von Typ-2-Diabetes. HighChol (+14 %) und CholCheck (+11,8 %)
+ergänzen diesen Cluster.
+
+**CholCheck als Diagnose-Proxy:** Wer keinen Cholesterin-Check hatte (= 0), zeigt
+nur 2,5 % Diabetes-Prävalenz — der niedrigste Wert aller Features. Das ist kein
+protektiver Effekt, sondern Diagnose-Bias: ohne Arztbesuch keine Diabetes-Diagnose.
+CholCheck misst teilweise Inanspruchnahme medizinischer Versorgung, nicht nur
+Cholesterin-Status.
+
+**Schwache positive Prädiktoren (Δ < 5 %):** Smoker, NoDocbcCost, AnyHealthcare
+und Sex zeigen nur geringe Unterschiede. Ihr bivariater Signal ist schwach; ob sie
+nach Kontrolle für Alter und Komorbidität noch erklären, zeigt das Modell.
+
+**Negative Prädiktoren:** PhysActivity (−9,5 %) und HvyAlcoholConsump (−8,6 %)
+sind assoziiert mit niedrigerer Diabetes-Prävalenz. PhysActivity ist erwartbar.
+HvyAlcoholConsump ist kontraintuitiv — eine mögliche Erklärung ist Survivorship-
+oder Healthy-User-Bias: Diabetiker reduzieren Alkohol nach Diagnose, oder starke
+Trinker sind im Schnitt jünger. Dieser Befund ist nicht kausal zu interpretieren.
+
+**Einschränkung:** Alle Δ-Werte sind bivariate, nicht für Confounding bereinigte
+Assoziationen. Alter, Einkommen und GenHlth sind potenzielle Confounder, die in
+der Modellierung über die gemeinsame Feature-Matrix kontrolliert werden.
