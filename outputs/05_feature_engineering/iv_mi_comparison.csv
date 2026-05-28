@@ -7,6 +7,8 @@ ses_index,,0.0147,Income,0.2281,0.0136,True
 mental_physical_burden,,0.0106,PhysHlth,0.2194,0.0141,False
 findrisc_lite,,0.0398,BMI,0.4694,0.0285,True
 ascvd_proxy,,0.0326,HighBP,0.6095,0.0351,False
+healthcare_access_index,,0.0002,CholCheck,0.0,0.0031,False
+ses_x_access,,0.0141,ses_index,,,False
 BMI_x_Age,,0.0478,BMI,0.4694,0.0285,True
 BMI_x_HighBP,,0.0454,HighBP,0.6095,0.0351,True
 Age_x_GenHlth,,0.06,GenHlth,0.7905,0.0441,True
