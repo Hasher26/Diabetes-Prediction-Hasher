@@ -1,0 +1,4 @@
+Strategie,mean PR-AUC,std PR-AUC
+Vanilla,0.4194,0.0031
+scale_pos_weight,0.4211,0.0057
+SMOTE,0.3737,0.0045
