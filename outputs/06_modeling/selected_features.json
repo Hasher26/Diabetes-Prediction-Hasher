@@ -7,7 +7,6 @@
     "HighBP",
     "BMI",
     "Age",
-    "CholCheck",
     "metsyn_proxy",
     "cardio_comorbidity",
     "HvyAlcoholConsump",
@@ -33,7 +32,6 @@
   "rfecv": [
     "HighBP",
     "HighChol",
-    "CholCheck",
     "BMI",
     "HvyAlcoholConsump",
     "GenHlth",
@@ -60,7 +58,6 @@
     "BMI_cat",
     "BMI_x_Age",
     "BMI_x_HighBP",
-    "CholCheck",
     "DiffWalk",
     "GenHlth",
     "HighBP",
@@ -72,5 +69,8 @@
     "findrisc_lite",
     "metsyn_proxy",
     "ses_index"
+  ],
+  "excluded": [
+    "CholCheck"
   ]
 }
