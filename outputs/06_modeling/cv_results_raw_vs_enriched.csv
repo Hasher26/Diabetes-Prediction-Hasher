@@ -1,5 +1,7 @@
 Modell,Featureset,mean PR-AUC,std PR-AUC,Δ Enriched-vs-Raw
 LogReg,Raw 21,0.406,0.0041,
-LogReg,Enriched 32,0.4181,0.0052,0.0121
+LogReg,Enriched 30,0.4181,0.0052,0.0121
 XGB,Raw 21,0.4234,0.0062,
-XGB,Enriched 32,0.4211,0.0058,-0.0023
+XGB,Enriched 30,0.4211,0.0058,-0.0023
+LightGBM,Raw 21,0.4353,0.0078,
+LightGBM,Enriched 30,0.4327,0.0067,-0.0026
