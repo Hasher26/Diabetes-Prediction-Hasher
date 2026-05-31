@@ -1,14 +1,14 @@
 Modell,Familie,Imbalance,mean PR-AUC,std PR-AUC,mean ROC-AUC,std ROC-AUC,Zeit (s)
-LightGBM,Boosting,scale_pos_weight,0.4327,0.0067,0.8288,0.0025,5.3
-HistGradBoost,Boosting,class_weight,0.4326,0.0071,0.8289,0.0024,9.6
-MLP,Neural Net,keines,0.4295,0.006,0.8279,0.0023,26.0
-CatBoost,Boosting,scale_pos_weight,0.4267,0.0054,0.8242,0.002,127.2
-XGBoost,Boosting,scale_pos_weight,0.4211,0.0058,0.8221,0.0022,6.9
-LogReg (EN),Linear,class_weight,0.4181,0.0052,0.8245,0.0016,78.8
-LDA,Linear,keines,0.4125,0.006,0.8222,0.0022,2.7
-AdaBoost,Boosting,keines,0.4063,0.0048,0.8201,0.0014,22.0
-GaussianNB,Linear,keines,0.3757,0.0024,0.8034,0.0017,1.4
-KNN,Distanz,keines,0.3512,0.0053,0.7829,0.0033,102.1
-Random Forest,Bagging,class_weight,0.3465,0.0034,0.7904,0.0021,149.8
-Extra Trees,Bagging,class_weight,0.3133,0.0028,0.7723,0.002,165.6
-Decision Tree,Einzelbaum,class_weight,0.1871,0.0021,0.5867,0.0034,4.2
+LightGBM,Boosting,scale_pos_weight,0.4327,0.0067,0.8288,0.0025,10.5
+HistGradBoost,Boosting,class_weight,0.4326,0.0071,0.8289,0.0024,20.6
+MLP,Neural Net,keines,0.4295,0.006,0.8279,0.0023,33.6
+CatBoost,Boosting,scale_pos_weight,0.4267,0.0054,0.8242,0.002,164.0
+XGBoost,Boosting,scale_pos_weight,0.4211,0.0058,0.8221,0.0022,12.7
+LogReg (EN),Linear,class_weight,0.4181,0.0052,0.8245,0.0016,503.5
+LDA,Linear,keines,0.4125,0.006,0.8222,0.0022,4.1
+AdaBoost,Boosting,keines,0.4063,0.0048,0.8201,0.0014,28.5
+GaussianNB,Linear,keines,0.3757,0.0024,0.8034,0.0017,10.6
+KNN,Distanz,keines,0.3512,0.0053,0.7829,0.0033,225.2
+Random Forest,Bagging,class_weight,0.3465,0.0034,0.7904,0.0021,168.2
+Extra Trees,Bagging,class_weight,0.3133,0.0028,0.7723,0.002,202.3
+Decision Tree,Einzelbaum,class_weight,0.1871,0.0021,0.5867,0.0034,12.0
