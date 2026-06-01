@@ -2,32 +2,32 @@
   "LightGBM": {
     "variant": "raw21",
     "default_prauc": 0.4353,
-    "tuned_prauc": 0.4359,
-    "delta": 0.0006,
+    "tuned_prauc": 0.4375,
+    "delta": 0.0022,
     "best_params": {
-      "n_estimators": 681,
-      "num_leaves": 218,
-      "learning_rate": 0.005439667429522981,
-      "min_child_samples": 195,
-      "subsample": 0.9162213204002109,
-      "colsample_bytree": 0.5274034664069657,
-      "reg_alpha": 4.329370014459266e-07,
-      "reg_lambda": 4.4734294104626844e-07
+      "n_estimators": 812,
+      "num_leaves": 20,
+      "learning_rate": 0.022593205866678834,
+      "min_child_samples": 125,
+      "subsample": 0.8147750637059414,
+      "colsample_bytree": 0.6789157153577202,
+      "reg_alpha": 1.2080288391422431,
+      "reg_lambda": 1.0091703239360354e-06
     },
-    "zeit_s": 198.3
+    "zeit_s": 1514.5
   },
   "MLP": {
     "variant": "raw21",
     "default_prauc": 0.4324,
-    "tuned_prauc": 0.4307,
-    "delta": -0.0017,
+    "tuned_prauc": 0.4346,
+    "delta": 0.0022,
     "best_params": {
       "hidden_layer_sizes": "(100,)",
-      "alpha": 8.629132190071855e-06,
-      "learning_rate_init": 0.00014936568554617635,
-      "max_iter": 447
+      "alpha": 0.213120991629225,
+      "learning_rate_init": 0.00018973440142522213,
+      "max_iter": 399
     },
-    "zeit_s": 182.7
+    "zeit_s": 2258.5
   },
   "LogReg": {
     "variant": "bmi_capped",
@@ -35,22 +35,22 @@
     "tuned_prauc": 0.4219,
     "delta": 0.0003,
     "best_params": {
-      "C": 0.017670169402947963,
-      "l1_ratio": 0.9507143064099162
+      "C": 0.01667237233081779,
+      "l1_ratio": 0.9101191290292077
     },
-    "zeit_s": 193.1
+    "zeit_s": 967.1
   },
   "CatBoost": {
     "variant": "raw21",
     "default_prauc": 0.4303,
-    "tuned_prauc": 0.4296,
-    "delta": -0.0007,
+    "tuned_prauc": 0.4382,
+    "delta": 0.0079,
     "best_params": {
-      "iterations": 324,
+      "iterations": 826,
       "depth": 5,
-      "learning_rate": 0.012184186502221764,
-      "l2_leaf_reg": 4.589458612326471
+      "learning_rate": 0.04003657792264006,
+      "l2_leaf_reg": 0.03636068060404491
     },
-    "zeit_s": 278.5
+    "zeit_s": 4024.3
   }
 }

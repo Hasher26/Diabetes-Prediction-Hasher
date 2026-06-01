@@ -1,18 +1,14 @@
 {
-  "architecture": "Single: LightGBM",
+  "architecture": "Single: CatBoost",
   "variant": "raw21",
   "params": {
-    "n_estimators": 681,
-    "num_leaves": 218,
-    "learning_rate": 0.005439667429522981,
-    "min_child_samples": 195,
-    "subsample": 0.9162213204002109,
-    "colsample_bytree": 0.5274034664069657,
-    "reg_alpha": 4.329370014459266e-07,
-    "reg_lambda": 4.4734294104626844e-07
+    "iterations": 826,
+    "depth": 5,
+    "learning_rate": 0.04003657792264006,
+    "l2_leaf_reg": 0.03636068060404491
   },
-  "cv_prauc": 0.4359,
-  "winner_label": "(a) LightGBM (getunt)",
-  "diversity_corr": 0.9881,
+  "cv_prauc": 0.4382,
+  "winner_label": "(a) CatBoost (getunt)",
+  "diversity_corr": 0.9944,
   "seed": 42
 }
