@@ -1,14 +1,15 @@
-Modell,Familie,Imbalance,mean PR-AUC,std PR-AUC,mean ROC-AUC,std ROC-AUC,Zeit (s)
-LightGBM,Boosting,scale_pos_weight,0.4327,0.0067,0.8288,0.0025,10.5
-HistGradBoost,Boosting,class_weight,0.4326,0.0071,0.8289,0.0024,20.6
-MLP,Neural Net,keines,0.4295,0.006,0.8279,0.0023,33.6
-CatBoost,Boosting,scale_pos_weight,0.4267,0.0054,0.8242,0.002,164.0
-XGBoost,Boosting,scale_pos_weight,0.4211,0.0058,0.8221,0.0022,12.7
-LogReg (EN),Linear,class_weight,0.4181,0.0052,0.8245,0.0016,503.5
-LDA,Linear,keines,0.4125,0.006,0.8222,0.0022,4.1
-AdaBoost,Boosting,keines,0.4063,0.0048,0.8201,0.0014,28.5
-GaussianNB,Linear,keines,0.3757,0.0024,0.8034,0.0017,10.6
-KNN,Distanz,keines,0.3512,0.0053,0.7829,0.0033,225.2
-Random Forest,Bagging,class_weight,0.3465,0.0034,0.7904,0.0021,168.2
-Extra Trees,Bagging,class_weight,0.3133,0.0028,0.7723,0.002,202.3
-Decision Tree,Einzelbaum,class_weight,0.1871,0.0021,0.5867,0.0034,12.0
+Modell,Familie,Imbalance,mean PR-AUC,std PR-AUC,mean ROC-AUC,std ROC-AUC,mean F1,mean Precision,mean Recall,mean BalancedAcc,mean MCC,Zeit (s)
+LightGBM,Boosting,scale_pos_weight,0.4327,0.0067,0.8288,0.0025,0.4403,0.3046,0.7937,0.7502,0.3603,7.6
+HistGradBoost,Boosting,class_weight,0.4326,0.0071,0.8289,0.0024,0.4411,0.3053,0.7945,0.7509,0.3614,14.6
+MLP,Neural Net,keines,0.4295,0.006,0.8279,0.0023,0.2253,0.5853,0.1403,0.5621,0.2386,32.6
+CatBoost,Boosting,scale_pos_weight,0.4267,0.0054,0.8242,0.002,0.4435,0.3122,0.7654,0.7462,0.3596,158.4
+XGBoost,Boosting,scale_pos_weight,0.4211,0.0058,0.8221,0.0022,0.4409,0.3093,0.7676,0.7451,0.3568,6.7
+LogReg (EN),Linear,class_weight,0.4181,0.0052,0.8245,0.0016,0.4427,0.3106,0.7705,0.7468,0.3595,61.8
+LDA,Linear,keines,0.4125,0.006,0.8222,0.0022,0.3373,0.5038,0.2536,0.6066,0.289,2.7
+AdaBoost,Boosting,keines,0.4063,0.0048,0.8201,0.0014,0.2514,0.5471,0.1639,0.5709,0.2452,28.5
+SVM (RBF-Nyström),SVM,class_weight,0.3853,0.0033,0.8199,0.0022,0.4335,0.2963,0.8076,0.7484,0.3546,11.1
+GaussianNB,Linear,keines,0.3757,0.0024,0.8034,0.0017,0.439,0.3251,0.676,0.7244,0.3426,1.3
+KNN,Distanz,keines,0.3512,0.0053,0.7829,0.0033,0.2374,0.5022,0.1555,0.5653,0.2225,167.2
+Random Forest,Bagging,class_weight,0.3465,0.0034,0.7904,0.0021,0.2373,0.4339,0.1633,0.5644,0.2001,144.6
+Extra Trees,Bagging,class_weight,0.3133,0.0028,0.7723,0.002,0.2552,0.3923,0.1892,0.5709,0.1961,202.3
+Decision Tree,Einzelbaum,class_weight,0.1871,0.0021,0.5867,0.0034,0.2886,0.2828,0.2945,0.5868,0.1707,4.6
