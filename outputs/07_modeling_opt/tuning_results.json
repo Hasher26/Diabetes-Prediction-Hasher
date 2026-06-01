@@ -1,0 +1,56 @@
+{
+  "LightGBM": {
+    "variant": "raw21",
+    "default_prauc": 0.4353,
+    "tuned_prauc": 0.4359,
+    "delta": 0.0006,
+    "best_params": {
+      "n_estimators": 681,
+      "num_leaves": 218,
+      "learning_rate": 0.005439667429522981,
+      "min_child_samples": 195,
+      "subsample": 0.9162213204002109,
+      "colsample_bytree": 0.5274034664069657,
+      "reg_alpha": 4.329370014459266e-07,
+      "reg_lambda": 4.4734294104626844e-07
+    },
+    "zeit_s": 198.3
+  },
+  "MLP": {
+    "variant": "raw21",
+    "default_prauc": 0.4324,
+    "tuned_prauc": 0.4307,
+    "delta": -0.0017,
+    "best_params": {
+      "hidden_layer_sizes": "(100,)",
+      "alpha": 8.629132190071855e-06,
+      "learning_rate_init": 0.00014936568554617635,
+      "max_iter": 447
+    },
+    "zeit_s": 182.7
+  },
+  "LogReg": {
+    "variant": "bmi_capped",
+    "default_prauc": 0.4216,
+    "tuned_prauc": 0.4219,
+    "delta": 0.0003,
+    "best_params": {
+      "C": 0.017670169402947963,
+      "l1_ratio": 0.9507143064099162
+    },
+    "zeit_s": 193.1
+  },
+  "CatBoost": {
+    "variant": "raw21",
+    "default_prauc": 0.4303,
+    "tuned_prauc": 0.4296,
+    "delta": -0.0007,
+    "best_params": {
+      "iterations": 324,
+      "depth": 5,
+      "learning_rate": 0.012184186502221764,
+      "l2_leaf_reg": 4.589458612326471
+    },
+    "zeit_s": 278.5
+  }
+}
