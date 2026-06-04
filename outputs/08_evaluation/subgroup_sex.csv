@@ -1,0 +1,3 @@
+Gruppe,n,Prävalenz,PR-AUC,Recall,Precision,F1,Pos-Rate
+0 – Weiblich,28531,0.129,0.421,0.787,0.304,0.439,0.334
+1 – Männlich,22205,0.152,0.427,0.816,0.305,0.444,0.407

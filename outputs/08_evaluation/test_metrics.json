@@ -1,0 +1,14 @@
+{
+  "test_pr_auc": 0.4238,
+  "test_roc_auc": 0.8271,
+  "T": 0.4924,
+  "test_recall": 0.8007,
+  "test_precision": 0.305,
+  "test_f1": 0.4417,
+  "test_bal_acc": 0.7526,
+  "test_mcc": 0.3633,
+  "tn": 30768,
+  "fp": 12899,
+  "fn": 1409,
+  "tp": 5660
+}
