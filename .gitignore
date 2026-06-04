@@ -67,3 +67,8 @@ htmlcov/
 
 # UCI data downloads cache
 ucimlrepo_cache/
+
+catboost_info/
+models/
+outputs/
+*.cbm
