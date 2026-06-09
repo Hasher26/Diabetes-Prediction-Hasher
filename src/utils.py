@@ -1,3 +1,6 @@
+import csv
+import datetime
+from pathlib import Path
 import numpy as np
 import pandas as pd
 
@@ -208,3 +211,24 @@ def build_enriched_features(df, bmi_encoding="raw", use_hurdle=True):
 
     final_cols = _BASE_COLS + hurdle_cols + composite_cols + inter_log_cols + bmi_block
     return X[final_cols]
+
+
+def log_result(results_path, notebook, model, pr_auc_mean, pr_auc_std,
+               roc_auc_mean=None, feature_set="raw21", imbalance="class_weight",
+               n_folds=5, seed=42):
+    p = Path(results_path); p.parent.mkdir(parents=True, exist_ok=True)
+    key = {"notebook": notebook, "model": model, "feature_set": feature_set,
+           "imbalance": imbalance, "seed": seed}
+    row = {"timestamp": datetime.datetime.now().isoformat(timespec="seconds"),
+           **key, "n_folds": n_folds,
+           "pr_auc_mean": round(float(pr_auc_mean), 4),
+           "pr_auc_std": round(float(pr_auc_std), 4),
+           "roc_auc_mean": round(float(roc_auc_mean), 4) if roc_auc_mean is not None else None}
+    df = pd.read_csv(p) if (p.exists() and p.stat().st_size > 0) else pd.DataFrame()
+    if not df.empty:
+        m = pd.Series(True, index=df.index)
+        for k, v in key.items():
+            m &= df[k].astype(str) == str(v)
+        df = df[~m]
+    df = pd.concat([df, pd.DataFrame([row])], ignore_index=True)
+    df.to_csv(p, index=False)
