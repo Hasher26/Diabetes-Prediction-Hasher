@@ -1,5 +1,6 @@
 import csv
 import datetime
+import json
 from pathlib import Path
 import numpy as np
 import pandas as pd
@@ -215,7 +216,7 @@ def build_enriched_features(df, bmi_encoding="raw", use_hurdle=True):
 
 def log_result(results_path, notebook, model, pr_auc_mean, pr_auc_std,
                roc_auc_mean=None, feature_set="raw21", imbalance="class_weight",
-               n_folds=5, seed=42):
+               n_folds=5, seed=42, pr_auc_folds=None, roc_auc_folds=None):
     p = Path(results_path); p.parent.mkdir(parents=True, exist_ok=True)
     key = {"notebook": notebook, "model": model, "feature_set": feature_set,
            "imbalance": imbalance, "seed": seed}
@@ -223,7 +224,9 @@ def log_result(results_path, notebook, model, pr_auc_mean, pr_auc_std,
            **key, "n_folds": n_folds,
            "pr_auc_mean": round(float(pr_auc_mean), 4),
            "pr_auc_std": round(float(pr_auc_std), 4),
-           "roc_auc_mean": round(float(roc_auc_mean), 4) if roc_auc_mean is not None else None}
+           "roc_auc_mean": round(float(roc_auc_mean), 4) if roc_auc_mean is not None else None,
+           "pr_auc_folds": json.dumps([round(float(v), 6) for v in pr_auc_folds]) if pr_auc_folds is not None else None,
+           "roc_auc_folds": json.dumps([round(float(v), 6) for v in roc_auc_folds]) if roc_auc_folds is not None else None}
     df = pd.read_csv(p) if (p.exists() and p.stat().st_size > 0) else pd.DataFrame()
     if not df.empty:
         m = pd.Series(True, index=df.index)
