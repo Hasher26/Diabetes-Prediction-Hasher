@@ -15,6 +15,7 @@ import datetime
 import json
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 from sklearn.model_selection import StratifiedGroupKFold
 
@@ -88,3 +89,24 @@ def log_result(results_path, notebook, model, pr_auc_mean, pr_auc_std,
         df = df[~mask]
     df = pd.concat([df, pd.DataFrame([row])], ignore_index=True)
     df.to_csv(p, index=False)
+
+
+def paired_delta(a, b, sign_min=4, c_practical=0.005):
+    """
+    Paired per-fold comparison: a minus b (both must be same-length arrays).
+
+    Returns a dict with per-fold deltas, mean Δ, std, standard error (se=sd/√n,
+    optimistic under fold dependence — Bengio & Grandvalet 2004), sign count,
+    and a retain flag requiring both the sign rule (n_pos >= sign_min) and the
+    practical-significance bar (mean >= 2·se AND mean >= c_practical).
+
+    sign_min     : folds where a > b needed to satisfy the sign rule (default 4/5).
+    c_practical  : minimum mean Δ to clear the practical-significance bar.
+    """
+    d = np.asarray(a, float) - np.asarray(b, float)
+    mean = float(d.mean()); sd = float(d.std(ddof=1)); se = sd / np.sqrt(len(d))
+    n_pos = int((d > 0).sum())
+    real  = (n_pos >= sign_min) and (mean >= 2 * se)
+    worth = mean >= c_practical
+    return {"deltas": d, "mean": mean, "sd": sd, "se": se, "n_pos": n_pos,
+            "real": bool(real), "worth": bool(worth), "retain": bool(real and worth)}
