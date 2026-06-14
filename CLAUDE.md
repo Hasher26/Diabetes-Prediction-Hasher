@@ -16,64 +16,75 @@
 - Genutzte Variante: **binary unbalanced** (~253.680 Samples, 21 Features)
 - Target: `Diabetes_binary` (0 = No Diabetes, 1 = Prediabetes/Diabetes)
 - Klassenverteilung: ~86 % / ~14 % → No-Skill-Baseline PR-AUC ≈ 0,14
-- Keine fehlenden Werte laut UCI; trotzdem in EDA verifizieren
-- Feature-Typen: 14 binär, 4 ordinal (GenHlth, Age, Education, Income), 3 numerisch (BMI, MentHlth, PhysHlth)
+- Keine fehlenden Werte laut UCI; in der EDA (NB02) verifiziert
+- Feature-Typen: 14 binär, 4 ordinal (GenHlth, Age, Education, Income), 2 count (MentHlth, PhysHlth), 1 kontinuierlich (BMI)
 - Datenzugriff: via `ucimlrepo`-Paket
 
-**Wichtig zum Label:** BRFSS-Frage erfasst Diagnose-Status (Selbstauskunft über ärztliche Mitteilung), nicht Krankheits-Status. Daraus resultiert asymmetrisches Label-Noise auf der negativen Klasse. Siehe Section 4 in `notebooks/01_business_understanding.ipynb`.
+**Wichtig zum Label:** Die BRFSS-Frage erfasst Diagnose-Status (Selbstauskunft über ärztliche Mitteilung), nicht Krankheits-Status. Daraus resultiert asymmetrisches Label-Noise auf der negativen Klasse (Undiagnostizierte erscheinen als 0). Die gemessene Precision ist damit eine Untergrenze. Siehe NB01 (Business Understanding) und die FP-Profilanalyse in NB08.
 
 ## Methodische Entscheidungen
 
-Vollständige Argumentation in `notebooks/01_business_understanding.ipynb`. Hier nur die operativen Konsequenzen:
+Vollständige Argumentation in `notebooks/01_business_understanding.ipynb`. Hier die operativen Konsequenzen, wie im finalen Code umgesetzt:
 
-**Pflicht-Teil (binäre Klassifikation):**
 - Output: `ŷ ∈ {0, 1}`
-- Primärmetrik: **PR-AUC** (schwellenunabhängig, Modellauswahl)
-- Sekundär: ROC-AUC, Confusion Matrix + Precision/Recall/F1 am gewählten Threshold, Subgruppen-Performance
-- Accuracy: nicht als Hauptmetrik (Imbalance verzerrt)
-- Threshold: use-case-getrieben (Recall-Constraint, z. B. Recall ≥ 0,80), nicht naiv 0,5
-- Cross-Validation: Stratified K-Fold
-- Class Imbalance: SMOTE oder `class_weight` — ausschließlich im Trainingsfold (imblearn Pipeline), nie auf gesamten Daten
-- Subgruppen-Auswertung: über Geschlecht, Altersgruppen, Einkommen
+- Primärmetrik: **PR-AUC** (schwellenunabhängig, steuert die Modellauswahl)
+- Sekundär: ROC-AUC, Brier, Confusion Matrix + Precision/Recall/F1/F2 am gewählten Threshold, Subgruppen-Performance
+- Accuracy: bewusst nicht als Hauptmetrik (Imbalance verzerrt)
+- Threshold: use-case-getrieben — größter Threshold mit OOF-Recall ≥ 0,80, auf OOF bestimmt, am Test nur angewendet (~0,138)
+- Cross-Validation: **StratifiedGroupKFold** (group-aware + stratifiziert), zentral definiert in `src/utils.py::make_cv`
+- **Class Imbalance: primär über Metrik (PR-AUC) + recall-getriebenen Threshold gelöst, NICHT über Resampling.** SMOTE / `class_weight` wurden im Funnel (NB06) evaluiert, haben das finale Modell nicht verbessert und wurden nicht übernommen (`imbalance: none`). Falls Resampling getestet wird, ausschließlich im Trainingsfold (imblearn Pipeline), nie auf gesamten Daten.
+- Subgruppen-Auswertung: Geschlecht, Altersgruppen, Einkommen, Bildung
 
-**Optionale Erweiterungen** (Section 10 im Business Understanding):
-- 10.1 Kalibrierung (Brier-Score, Calibration Plot, ggf. Platt/Isotonic)
-- 10.2 Tier-basiertes Deployment (zwei Thresholds, dreistufige Empfehlung)
-- 10.3 False-Positive-Profilanalyse zur Label-Noise-Stützung
+**Optionale Erweiterungen (umgesetzt in NB08):**
+- Kalibrierung (Brier-Score, Reliability-Curve; Isotonic als Illustration geprüft, nicht übernommen — verschlechtert Brier nicht und senkt PR-AUC)
+- Tier-/Threshold-Betrachtung und illustrative gruppenspezifische Schwellen (auf TRAIN-OOF bestimmt)
+- False-Positive-Profilanalyse zur Stützung der Label-Noise-These
 
-## Stand des Projekts
+## Finaler Modellstand
 
-**Abgeschlossen:**
-- `notebooks/01_business_understanding.ipynb` — CRISP-DM Phase 1 (Business Understanding)
+- **Finales Modell: tuned LightGBM** (Primärmodell, deployt), LogReg-L2 als interpretierbarer Begleiter
+- Feature-Set: `headline_pool` = raw 21 Features + `BMI_squared` (22 Spalten)
+- Tuning: `RandomizedSearchCV` (LightGBM, MLP) + `GridSearchCV` (LogReg-C) — **kein Optuna, kein CatBoost**
+- Stacking (MLP+LightGBM) als sekundärer, vorab registrierter Vergleich geprüft, aber nicht promotet (Gewinn über bestes Einzelmodell nicht über 1 SE)
+- Test-Kennzahlen (einmalige Evaluation, NB08): PR-AUC 0,4330 (95% CI [0,4217, 0,4458]); ROC-AUC 0,8288; Brier 0,0968; Recall@T 0,789; Precision@T 0,306; OOF→Test-Gap −0,003
+- Ehrlicher Rahmen: System ist **daten-, nicht modell-limitiert** — die Headline-PR-AUC ist durch Label-Noise gedeckelt, nicht durch Hyperparameter
 
-**Als Nächstes:**
-- `notebooks/02_data_understanding.ipynb` — CRISP-DM Phase 2 (Data Understanding / EDA)
-  1. Datensatz laden, Grundstruktur, Datentypen
-  2. Target-Verteilung + No-Skill-Baselines
-  3. Duplikat- und Label-Konsistenz-Analyse (empirisches irreduzibles Rauschen)
-  4. Univariate Verteilungen, Outlier-Inspektion (besonders BMI, MentHlth, PhysHlth)
-  5. Bivariate Analyse: Target-Prävalenz pro Feature-Ausprägung
-  6. Korrelationen unter Features
-  7. Class-Overlap (PCA/UMAP)
+## Notebook-Pipeline (CRISP-DM)
+
+| Phase | Notebook(s) |
+|---|---|
+| Business Understanding | NB01 |
+| Data Understanding | NB02 |
+| Data Preparation | NB03–05 |
+| Modelling | NB06–07 |
+| Evaluation | NB08 |
+| (NB00 = Intro/Overview) | — |
+
+Alle Notebooks (00–08) sind ausgeführt. Reihenfolge muss eingehalten werden: jedes Notebook hängt an den Outputs der vorherigen.
 
 ## Projektstruktur
 
 ```
 diabetes-prediction-ml/
 ├── notebooks/
-│   ├── 01_business_understanding.ipynb     # ✓ abgeschlossen
-│   ├── 02_data_understanding.ipynb         # nächster Schritt
+│   ├── 00_introduction.ipynb
+│   ├── 01_business_understanding.ipynb
+│   ├── 02_data_understanding.ipynb
 │   ├── 03_data_preparation.ipynb
-│   ├── 04_modeling.ipynb
-│   ├── 05_evaluation.ipynb
-│   └── 06_deployment.ipynb
-├── src/                                    # wiederverwendbare Python-Module
-├── data/                                   # nicht in Git
-│   ├── raw/
-│   └── processed/
-├── results/                                # nicht in Git
-│   ├── models/
-│   └── plots/
+│   ├── 04_baseline.ipynb
+│   ├── 05_feature_engineering.ipynb
+│   ├── 06_modeling_funnel.ipynb
+│   ├── 07_hyperparameter_tuning.ipynb
+│   ├── 08_evaluation.ipynb
+│   └── assets/                              # crispdm.png
+├── src/
+│   ├── features.py                          # row-wise, leakage-freies Feature-Engineering
+│   ├── inference.py                         # standalone Scoring des finalen Modells
+│   └── utils.py                             # make_cv (CV-Splitter) + log_result (Ledger)
+├── literatur/                               # zitierte Paper (PDF)
+├── data/                                    # nicht in Git; zur Laufzeit erzeugt
+├── models/                                  # nicht in Git
+├── outputs/                                 # nicht in Git; Plots/CSVs je Notebook
 ├── CLAUDE.md
 ├── README.md
 ├── requirements.txt
@@ -83,14 +94,13 @@ diabetes-prediction-ml/
 ## Coding-Konventionen
 
 - Python 3.10+
-- Variablennamen und Code-Kommentare auf Englisch
-- Notebook-Markdown auf Deutsch (Diskussion, Begründung, Interpretation)
-- Notebooks numerisch nummeriert: `01_`, `02_`, …
-- Keine hardcoded absoluten Pfade — nur relative Pfade vom Repo-Root
-- Reproduzierbarkeit: einen Seed an einer zentralen Stelle festlegen und konsistent verwenden (Konvention: am Notebook-Anfang als `SEED = …`)
-- Pipelines mit `sklearn.pipeline.Pipeline` oder `imblearn.pipeline.Pipeline` (für SMOTE)
-- Train/Val/Test-Split *vor* allem anderen
-- Preprocessing/SMOTE/Scaling ausschließlich innerhalb der Pipeline auf Trainingsfolds — kein Leakage
+- Variablennamen und Code-Kommentare auf Englisch; Notebook-Markdown auf Deutsch
+- Notebooks numerisch nummeriert: `00_`, `01_`, …
+- Keine hardcoded absoluten Pfade — `PROJECT_ROOT` wird über das erste Parent mit `notebooks/` aufgelöst
+- Reproduzierbarkeit: ein zentraler `SEED = 42`, konsistent verwendet; in NB03 in `feature_meta.json` persistiert und von NB04+ geladen
+- Pipelines mit `sklearn.pipeline.Pipeline` (bzw. `imblearn.pipeline.Pipeline`, falls Resampling getestet wird)
+- Train/Test-Split *vor* allem anderen; Preprocessing/Scaling ausschließlich in-fold — kein Leakage
+- CV immer über `src.utils.make_cv` + denselben `groups`-Vektor (raw-21-Profil-Hash)
 
 ## Workflow-Hinweise für Claude
 
@@ -99,5 +109,5 @@ diabetes-prediction-ml/
 - **Token-effizient** antworten (User-Präferenz)
 - Bei medizinischen oder statistischen Aussagen: **Quellen** liefern, nicht aus dem Bauch
 - Markdown-Cells sparsam formatieren — Prosa bevorzugt, keine übermäßige Bullet-/Tabellen-Lastigkeit
-- Notebooks via Python-Skript bauen (sauberes ipynb-JSON), Markdown-Cells für Erklärungen, Code-Cells klar getrennt
+- Notebooks via Python-Skript bauen (sauberes ipynb-JSON), Markdown- und Code-Cells klar getrennt
 - Vor jedem File-Create / Code: relevante SKILL.md unter `/mnt/skills/public/` lesen, falls verfügbar
