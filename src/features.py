@@ -16,7 +16,7 @@ import pandas as pd
 # ---------------------------------------------------------------------------
 # WHO BMI classification constants (TRS 894, 2000)
 # 0 underweight, 1 normal, 2 overweight, 3 obese-I, 4 obese-II,
-# 5 obese-III, 6 super-obese.
+# 5 obese-III (40-50), 6 super-obese (>=50; WHO class III subdivided at 50).
 # ---------------------------------------------------------------------------
 WHO_BINS   = [0, 18.5, 25, 30, 35, 40, 50, 999]
 WHO_LABELS = [0, 1, 2, 3, 4, 5, 6]
@@ -30,8 +30,8 @@ def add_bmi_features(X):
     """
     Add BMI re-encodings (additive — nothing dropped).
 
-    BMI_squared : additive non-linearity term capturing J-shaped risk
-                  (Tirosh et al. 2011, NEJM).
+   BMI_squared : additive non-linearity capturing the convex (accelerating)
+                  risk rise at high BMI (Tirosh et al. 2011, NEJM).
     BMI_capped  : clip to [18, 50] — fixed WHO clinical constants, NOT
                   data-derived percentiles, hence leakage-free and not an
                   in-fold step.
@@ -71,9 +71,11 @@ def add_hurdle_features(X):
 
 def add_composites(X):
     """
-    Row-wise sums from validated, biomarker-free risk scores (BRFSS-available
-    subset).  Each is linearly redundant for Logistic Regression and marginal
-    for trees — kept for screening and interpretive value.
+    Row-wise sums on the BRFSS-available subset. findrisc_lite, ada_risk_proxy
+    and healthy_lifestyle adapt validated scores; comorbidity_count, ses_index
+    and healthcare_access_index are rationale-based equal-weighted sums (not
+    published scores).  Each is linearly redundant for Logistic Regression and
+    marginal for trees — kept for screening and interpretive value.
 
     comorbidity_count       : cardiometabolic burden (Muhammad et al. 2025)
     findrisc_lite           : FINDRISC-adapted diabetes risk (Lindström & Tuomilehto 2003)
