@@ -20,6 +20,17 @@ import pandas as pd
 from sklearn.model_selection import StratifiedGroupKFold
 
 
+def make_groups(X):
+    """
+    Return the canonical per-row group vector for StratifiedGroupKFold.
+
+    Each row gets the hash of its full feature profile, so rows with an
+    identical feature vector share a group ID and stay together in every CV
+    fold. Always pass the raw-21 feature matrix (no engineered columns).
+    """
+    return pd.util.hash_pandas_object(X, index=False).values
+
+
 def make_cv(n_splits=5, seed=42):
     """
     Return the project's canonical cross-validation splitter.
