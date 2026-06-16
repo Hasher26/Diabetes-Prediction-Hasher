@@ -1,0 +1,110 @@
+{
+  "model": "LightGBM",
+  "trained_on": "full training set (202,943 rows)",
+  "raw_features_expected": [
+    "HighBP",
+    "HighChol",
+    "CholCheck",
+    "Smoker",
+    "Stroke",
+    "HeartDiseaseorAttack",
+    "PhysActivity",
+    "Fruits",
+    "Veggies",
+    "HvyAlcoholConsump",
+    "AnyHealthcare",
+    "NoDocbcCost",
+    "DiffWalk",
+    "Sex",
+    "GenHlth",
+    "Age",
+    "Education",
+    "Income",
+    "MentHlth",
+    "PhysHlth",
+    "BMI"
+  ],
+  "derived_features": {
+    "BMI_squared": "BMI ** 2"
+  },
+  "model_input_columns": [
+    "HighBP",
+    "HighChol",
+    "CholCheck",
+    "Smoker",
+    "Stroke",
+    "HeartDiseaseorAttack",
+    "PhysActivity",
+    "Fruits",
+    "Veggies",
+    "HvyAlcoholConsump",
+    "AnyHealthcare",
+    "NoDocbcCost",
+    "DiffWalk",
+    "Sex",
+    "GenHlth",
+    "Age",
+    "Education",
+    "Income",
+    "MentHlth",
+    "PhysHlth",
+    "BMI",
+    "BMI_squared"
+  ],
+  "operating_threshold": 0.1379,
+  "decision_rule": "label = 1 if P(diabetes) >= 0.1379 else 0  (recall-floor screening policy, recall >= 0.8 on OOF)",
+  "calibration": "none (raw probabilities; decided in NB07)",
+  "test_metrics": {
+    "PR_AUC": 0.433,
+    "PR_AUC_CI95": [
+      0.4217,
+      0.4458
+    ],
+    "ROC_AUC": 0.8288,
+    "ROC_AUC_CI95": [
+      0.8238,
+      0.8336
+    ],
+    "Brier_raw": 0.0968,
+    "Brier_CI95": [
+      0.0949,
+      0.0986
+    ],
+    "Brier_isotonic_illustration": 0.0969,
+    "prevalence": 0.1393
+  },
+  "at_threshold": {
+    "threshold": 0.1379,
+    "precision": 0.3057,
+    "recall_sensitivity": 0.7894,
+    "specificity": 0.7097,
+    "F1": 0.4407,
+    "F2": 0.5996,
+    "balanced_acc": 0.7496,
+    "MCC": 0.3601
+  },
+  "tuned_params": {
+    "colsample_bytree": 0.7502331810559776,
+    "learning_rate": 0.013251752704998034,
+    "max_depth": 6,
+    "min_child_samples": 162,
+    "n_estimators": 774,
+    "num_leaves": 76,
+    "reg_alpha": 0.014001191914113755,
+    "reg_lambda": 0.23085168151108015,
+    "subsample": 0.6122000999756197
+  },
+  "estimator_defaults": {
+    "verbose": -1,
+    "n_jobs": -1,
+    "random_state": 42,
+    "subsample_freq": 1
+  },
+  "seed": 42,
+  "versions": {
+    "sklearn": "1.8.0",
+    "lightgbm": "4.6.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.3"
+  }
+}

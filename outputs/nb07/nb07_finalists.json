@@ -1,0 +1,109 @@
+{
+  "seed": 42,
+  "n_folds": 5,
+  "prevalence": 0.13932976254416266,
+  "feature_set": "headline_pool",
+  "imbalance": "none",
+  "estimator_defaults": {
+    "LightGBM": {
+      "verbose": -1,
+      "n_jobs": -1,
+      "random_state": 42,
+      "subsample_freq": 1
+    },
+    "MLP": {
+      "max_iter": 300,
+      "early_stopping": true,
+      "n_iter_no_change": 10,
+      "validation_fraction": 0.1,
+      "random_state": 42
+    },
+    "LogReg-L2": {
+      "penalty": "l2",
+      "max_iter": 2000,
+      "random_state": 42
+    }
+  },
+  "tuned": {
+    "LogReg-L2": {
+      "role": "interpretability",
+      "params": {
+        "C": 1.0
+      },
+      "pr_auc": 0.4208,
+      "roc_auc": 0.8255,
+      "brier": 0.0979,
+      "gap": 0.0002
+    },
+    "LightGBM": {
+      "role": "performance",
+      "params": {
+        "colsample_bytree": 0.7502331810559776,
+        "learning_rate": 0.013251752704998034,
+        "max_depth": 6,
+        "min_child_samples": 162,
+        "n_estimators": 774,
+        "num_leaves": 76,
+        "reg_alpha": 0.014001191914113755,
+        "reg_lambda": 0.23085168151108015,
+        "subsample": 0.6122000999756197
+      },
+      "pr_auc": 0.4371,
+      "roc_auc": 0.8314,
+      "brier": 0.0963,
+      "gap": 0.0297
+    },
+    "MLP": {
+      "role": "performance",
+      "params": {
+        "alpha": 0.002463768595899745,
+        "batch_size": 512,
+        "hidden_layer_sizes": [
+          100
+        ],
+        "learning_rate_init": 0.0002465844721448739
+      },
+      "pr_auc": 0.4317,
+      "roc_auc": 0.8295,
+      "brier": 0.0968,
+      "gap": 0.0094
+    }
+  },
+  "stack": {
+    "base_learners": [
+      "MLP",
+      "LightGBM"
+    ],
+    "meta_learner": "LogisticRegression",
+    "pr_auc": 0.4373,
+    "delta_vs_best_single": 0.0002,
+    "beats_best_single_1se": false,
+    "status": "secondary pre-specified comparison; not promoted in NB07 because the gain over tuned LightGBM did not clear 1-SE",
+    "training_protocol": "Build the final stack as follows: (1) load the tuned-base OOF columns saved in nb07_tuned_oof.parquet (oof_mlp, oof_lgbm) and fit the LogReg meta-learner on them against y_train; (2) refit the tuned MLP and tuned LightGBM (params under 'tuned') on the FULL training set; (3) predict the test set with both refit base learners; (4) feed those two test probability columns into the fitted meta-learner. NEVER train the meta-learner on in-sample base predictions \u2014 only on OOF."
+  },
+  "final_for_nb08": {
+    "primary": "LightGBM",
+    "companion": "LogReg-L2",
+    "best_single_for_comparison": {
+      "name": "LightGBM",
+      "pr_auc": 0.4371
+    },
+    "operating_threshold": 0.1379,
+    "operating_metrics": {
+      "model": "LightGBM",
+      "threshold": 0.1379,
+      "PR_AUC": 0.4364,
+      "ROC_AUC": 0.8313,
+      "Brier": 0.0963,
+      "precision": 0.3078,
+      "recall_sensitivity": 0.8,
+      "specificity": 0.7087,
+      "F1": 0.4445,
+      "F2": 0.6061,
+      "balanced_acc": 0.7543,
+      "MCC": 0.3665
+    },
+    "threshold_policy": "largest OOF threshold with recall >= 0.8"
+  },
+  "note": "all numbers are CV/OOF and mildly optimistic; NB08 on the frozen test set is the only unbiased estimate"
+}

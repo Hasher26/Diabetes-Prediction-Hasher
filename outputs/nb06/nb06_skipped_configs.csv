@@ -1,0 +1,5 @@
+model,feature_set,imbalance,reason
+MLP,raw21,native,no native weighting for this family
+MLP,headline_pool,native,no native weighting for this family
+MLP,fullpool_L1,native,no native weighting for this family
+MLP,fullpool_EN,native,no native weighting for this family

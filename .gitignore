@@ -33,19 +33,6 @@ ENV/
 Thumbs.db
 desktop.ini
 
-# Project: data and results (large files, not in Git)
-data/raw/
-data/processed/
-data/interim/
-data/external/
-results/models/
-results/plots/
-results/figures/
-*.pkl
-*.joblib
-*.h5
-*.parquet
-
 # Secrets
 .env
 .env.local
@@ -68,7 +55,3 @@ htmlcov/
 # UCI data downloads cache
 ucimlrepo_cache/
 
-catboost_info/
-models/
-outputs/
-*.cbm

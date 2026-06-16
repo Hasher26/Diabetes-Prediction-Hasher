@@ -1,5 +1,5 @@
 # Exakt gepinnt auf das Environment, in dem die finalen Ergebnisse (NB08) entstanden sind.
-# Python 3.10+ erforderlich. Reproduziert die berichteten Zahlen byte-genau.
+# Python 3.14+ erforderlich. Reproduziert die berichteten Zahlen byte-genau.
 
 # Core
 numpy==2.4.6

@@ -1,0 +1,55 @@
+{
+  "binary_cols": [
+    "HighBP",
+    "HighChol",
+    "CholCheck",
+    "Smoker",
+    "Stroke",
+    "HeartDiseaseorAttack",
+    "PhysActivity",
+    "Fruits",
+    "Veggies",
+    "HvyAlcoholConsump",
+    "AnyHealthcare",
+    "NoDocbcCost",
+    "DiffWalk",
+    "Sex"
+  ],
+  "ordinal_cols": [
+    "GenHlth",
+    "Age",
+    "Education",
+    "Income"
+  ],
+  "count_cols": [
+    "MentHlth",
+    "PhysHlth"
+  ],
+  "numeric_cols": [
+    "BMI"
+  ],
+  "all_features": [
+    "HighBP",
+    "HighChol",
+    "CholCheck",
+    "Smoker",
+    "Stroke",
+    "HeartDiseaseorAttack",
+    "PhysActivity",
+    "Fruits",
+    "Veggies",
+    "HvyAlcoholConsump",
+    "AnyHealthcare",
+    "NoDocbcCost",
+    "DiffWalk",
+    "Sex",
+    "GenHlth",
+    "Age",
+    "Education",
+    "Income",
+    "MentHlth",
+    "PhysHlth",
+    "BMI"
+  ],
+  "seed": 42
+}

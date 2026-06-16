@@ -1,0 +1,4 @@
+model,feature_set,imbalance,pr_auc_mean,roc_auc_mean,brier_mean,fit_time,role,reason
+MLP,headline_pool,none,0.43089578637261805,0.8293949501718221,0.09684638750614548,39.41024923324585,tuning_finalist,performance (tie-band rule)
+LightGBM,headline_pool,none,0.4302779671683732,0.8284996521983992,0.09690455098250014,7.066790819168091,tuning_finalist,performance (tie-band rule)
+LogReg-L2,headline_pool,none,0.4207876240529226,0.8255314747460328,0.0978742490953052,1.1294236183166504,tuning_finalist,interpretability (transparent linear model for clinical use)

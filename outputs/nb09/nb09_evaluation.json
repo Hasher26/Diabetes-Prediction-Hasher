@@ -1,0 +1,22 @@
+{
+  "n": 50737,
+  "prevalence": 0.1393,
+  "threshold": 0.1379,
+  "precision": 0.3057,
+  "recall_sensitivity": 0.7894,
+  "specificity": 0.7097,
+  "F1": 0.4407,
+  "F2": 0.5996,
+  "balanced_acc": 0.7496,
+  "MCC": 0.3601,
+  "confusion": {
+    "TN": 30992,
+    "FP": 12675,
+    "FN": 1489,
+    "TP": 5581
+  },
+  "PR_AUC": 0.433,
+  "ROC_AUC": 0.8288,
+  "Brier": 0.0968,
+  "PR_AUC_lift_over_prevalence": 3.11
+}

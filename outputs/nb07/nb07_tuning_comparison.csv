@@ -1,0 +1,4 @@
+model,default_PR,tuned_PR,Δ,1SE,>1SE,tuned_gap,tuned_ROC,tuned_Brier
+LogReg-L2,0.4208,0.4208,0.0,0.0,False,0.0002,0.8255,0.0979
+LightGBM,0.4303,0.4371,0.0068,0.0005,True,0.0297,0.8314,0.0963
+MLP,0.4309,0.4317,0.0008,0.0007,True,0.0094,0.8295,0.0968
