@@ -50,23 +50,25 @@ no amount of further tuning meaningfully moves the headline number.
 
 ```
 diabetes-prediction-ml/
-├── notebooks/          # one notebook per CRISP-DM step (00–08)
+├── notebooks/          # one notebook per CRISP-DM step (00–09)
 │   └── assets/         # figures embedded in notebooks (e.g. crispdm.png)
 ├── literatur/          # cited papers (PDF)
 ├── src/
 │   ├── features.py     # row-wise, leakage-free feature engineering (NB05+)
-│   ├── inference.py    # standalone scoring of the final model (NB08 hand-off)
+│   ├── inference.py    # standalone scoring of the final model (NB08 → NB09)
 │   └── utils.py        # shared CV splitter + results ledger
-├── data/               # git-ignored; generated at runtime
-├── models/             # git-ignored; written during modelling
-├── outputs/            # git-ignored; plots/CSVs per notebook
+├── data/processed/     # tracked; prepared train/test splits (parquet) + feature_meta.json
+├── models/             # tracked; final LightGBM artefacts + model_card.json
+├── outputs/            # tracked; plots/CSVs per notebook + results.csv
 ├── CLAUDE.md
 ├── requirements.txt
 ├── README.md
 └── .gitignore
 ```
 
-`data/`, `models/`, and `outputs/` are git-ignored and generated at runtime.
+`data/processed/`, `models/`, and `outputs/` are versioned so the professor Bauer can run NB09
+(inference) without re-executing the full pipeline. The raw UCI download is not stored —
+it is fetched at runtime via `ucimlrepo` only if you run from NB02.
 
 ## Reproducing the results
 
@@ -74,13 +76,15 @@ diabetes-prediction-ml/
 pip install -r requirements.txt
 ```
 
-Python 3.10 or later. The raw data is **not** stored in the repository; it is fetched at runtime
-via the `ucimlrepo` package (UCI dataset #891), so the first run needs an internet connection.
+Python 3.14 or later. The processed data, trained model artefacts, and output plots are already
+in the repository, so you can run NB09 (deployment / inference) immediately without re-executing
+the full pipeline. If you want to reproduce from scratch, start at NB02 — it fetches the raw
+survey data at runtime via the `ucimlrepo` package (UCI dataset #891, internet required).
 Every computational notebook fixes `SEED = 42` and passes it to all stochastic steps. Run the
 numbered notebooks in order from the repository root — each depends on the outputs of the ones
 before it.
 
-A full overview (methodology, team contributions, CRISP-DM mapping) is in
+A full overview (methodology, team, CRISP-DM mapping) is in
 [`notebooks/00_introduction.ipynb`](notebooks/00_introduction.ipynb). The written report is
 submitted separately as the project thesis.
 

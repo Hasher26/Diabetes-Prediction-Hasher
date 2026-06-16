@@ -1,5 +1,5 @@
-# Exakt gepinnt auf das Environment, in dem die finalen Ergebnisse (NB08) entstanden sind.
-# Python 3.14+ erforderlich. Reproduziert die berichteten Zahlen byte-genau.
+# Pinned exactly to the environment in which the final results (NB08) were produced.
+# Python 3.14+ required. Reproduces the reported numbers byte-for-byte.
 
 # Core
 numpy==2.4.6
@@ -8,26 +8,29 @@ scipy==1.17.1
 
 # ML
 scikit-learn==1.8.0
-imbalanced-learn==0.14.1     # SMOTE im Funnel evaluiert (NB06); imblearn-Pipeline
-lightgbm==4.6.0              # finales Modell
-xgboost==3.2.0               # Kandidat im Modelling-Funnel (NB06)
-joblib==1.5.3                # Modell-Persistenz (NB08, src/inference.py)
+imbalanced-learn==0.14.1     # SMOTE evaluated in the modelling funnel (NB06); imblearn pipeline
+lightgbm==4.6.0              # final model
+xgboost==3.2.0               # candidate in the modelling funnel (NB06)
+joblib==1.5.3                # model persistence (NB08, src/inference.py)
 
-# Visualisierung
+# Visualisation
 matplotlib==3.10.9
 seaborn==0.13.2
 
-# Interpretierbarkeit
+# Interpretability
 shap==0.51.0
 
-# Statistik
+# Statistics
 statsmodels==0.14.6
 
-# Datei-I/O (parquet-Backend fuer to_parquet/read_parquet)
+# File I/O (parquet backend for to_parquet/read_parquet)
 pyarrow==24.0.0
 
-# Datensatz-Zugriff
+# Dataset access
 ucimlrepo==0.0.7
+
+# Excel support (for pd.read_excel in NB09; no effect on NB08 results)
+openpyxl>=3.1
 
 # Notebooks
 jupyterlab==4.5.7
